@@ -76,11 +76,9 @@ _M.save = function (file)
     state = istate
 
     if #state > 0 then
-        local tempfile = file .. ".new"
-        local fh = io.open(tempfile, "wb")
+        local fh = io.open(file, "wb")
         fh:write(pickle.pickle(state))
         io.close(fh)
-        os.rename(tempfile, file)
     else
         rm(file)
     end
@@ -93,8 +91,7 @@ end
 --
 -- If no file is specified, the path specified by @ref{session_file} is used.
 --
--- If `delete` is not `false` and the session file is not the recovery file,
--- then the session file is backed up into the recovery file.
+-- If `delete` is not `false`, then the session file is deleted.
 --
 -- @tparam[opt] boolean delete Whether to delete the file after the session is
 -- loaded.
@@ -107,16 +104,14 @@ _M.load = function (delete, file)
     local fh = io.open(file, "rb")
     local state = pickle.unpickle(fh:read("*all"))
     io.close(fh)
-    -- Backup file on idle (i.e. only if config loads successfully)
-    if delete ~= false and file ~= _M.recovery_file then
-        luakit.idle_add(function() os.rename(file, _M.recovery_file) end)
-    end
+    -- Delete file on idle (i.e. only if config loads successfully)
+    if delete ~= false then luakit.idle_add(function() rm(file) end) end
 
     return state
 end
 
 -- Spawn windows from saved session and return the last window
-local restore_file = function (file, delete)
+_M.restore_file = function (file, delete)
     local ok, wins = pcall(_M.load, delete, file)
     if not ok or #wins == 0 then return end
 
@@ -162,8 +157,8 @@ end
 -- @treturn[1] table The window table for the last window created.
 -- @treturn[2] nil If no session could be loaded, `nil` is returned.
 _M.restore = function(delete)
-    return restore_file(_M.session_file, delete)
-        or restore_file(_M.recovery_file, delete)
+    return _M.restore_file(_M.session_file, delete)
+        or _M.restore_file(_M.recovery_file, delete)
 end
 
 local session_dirty = true
