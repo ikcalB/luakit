@@ -78,6 +78,7 @@ local new_mode = require("modes").new_mode
 local modes = require("modes")
 local add_binds = modes.add_binds
 local lousy = require("lousy")
+local theme = lousy.theme.get()
 local settings = require("settings")
 
 local _M = {}
@@ -95,7 +96,7 @@ _M.ignore_delay = 200
 --- CSS applied to the follow mode overlay.
 -- @type string
 -- @readwrite
-_M.stylesheet = [===[
+_M.stylesheet = [[
 #luakit_select_overlay {
     position: absolute;
     left: 0;
@@ -106,26 +107,24 @@ _M.stylesheet = [===[
 #luakit_select_overlay .hint_overlay {
     display: block;
     position: absolute;
-    background-color: #ffff99;
-    border: 1px dotted #000;
-    opacity: 0.3;
+    background-color: ]] .. (theme.hint_overlay_bg     or "rgba(255,255,153,0.3)") .. [[;
+    border:           ]] .. (theme.hint_overlay_border or "1px dotted #000")       .. [[;
 }
 
 #luakit_select_overlay .hint_label {
     display: block;
     position: absolute;
-    background-color: #000088;
-    border: 1px dashed #000;
-    color: #fff;
-    font-size: 10px;
-    font-family: monospace, courier, sans-serif;
-    opacity: 0.4;
+    background-color: ]] .. (theme.hint_bg     or "#000088")                             .. [[;
+    border:           ]] .. (theme.hint_border or "1px dashed #000")                     .. [[;
+    color:            ]] .. (theme.hint_fg     or "#fff")                                .. [[;
+    font:             ]] .. (theme.hint_font   or "10px monospace, courier, sans-serif") .. [[;
 }
 
 #luakit_select_overlay .hint_selected {
-    background-color: #00ff00 !important;
+    background-color: ]] .. (theme.hint_overlay_selected_bg     or "rgba(0,255,0,0.3)") .. [[ !important;
+    border:           ]] .. (theme.hint_overlay_selected_border or "1px dotted #000")   .. [[;
 }
-]===]
+]]
 
 -- Lua regex escape function
 local function regex_escape(s)
