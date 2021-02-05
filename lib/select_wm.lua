@@ -9,6 +9,7 @@
 -- @copyright 2017 Aidan Holm <aidanholm@gmail.com>
 
 local ceil, floor, max = math.ceil, math.floor, math.max
+local settings = require("settings")
 
 local _M = {}
 
@@ -486,8 +487,15 @@ function _M.enter(page, elements, stylesheet, ignore_case)
             local e = hint.elem
             local r = hint.bb
 
+-- FIXME: settings do not work in "web_modules", just returning nil
+--            local dx = settings.get_setting("follow.hint_offset.x")
+--            local dy = settings.get_setting("follow.hint_offset.y")
+-- settings defaults manually for now (-5 looks like a more sane default?)
+            local dx = -5
+            local dy = -5
+
             local overlay_style = string.format("left: %dpx; top: %dpx; width: %dpx; height: %dpx;", r.x, r.y, r.w, r.h)
-            local label_style = string.format("left: %dpx; top: %dpx;", max(r.x-10, fsx), max(r.y-10, fsy), r.w, r.h)
+            local label_style = string.format("left: %dpx; top: %dpx;", max(r.x+dx, fsx), max(r.y+dy, fsy), r.w, r.h)
 
             local overlay_class = "hint_overlay hint_overlay_" .. e.tag_name
             local label_class = "hint_label hint_label_" .. e.tag_name

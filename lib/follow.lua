@@ -107,6 +107,7 @@ local modes = require("modes")
 local add_binds = modes.add_binds
 local lousy = require("lousy")
 local theme = lousy.theme.get()
+local settings = require("settings")
 
 local _M = {}
 
@@ -592,6 +593,21 @@ add_binds("ex-follow", {
             })
         end },
 })
+
+settings.register_settings({
+    ["follow.hint_offset.x"] = {
+        type = "number", min = -25, max = 25,
+        default = -10,
+        desc = "horizontal hint label (i.e. follow mode) offset"
+    },
+    ["follow.hint_offset.y"] = {
+        type = "number", min = -25, max = 25,
+        default = -10,
+        desc = "vertical hint label (i.e. follow mode) offset"
+    },
+})
+
+settings.migrate_global("follow.hint_offset.x", "follow.hint_offset.y")
 
 return _M
 

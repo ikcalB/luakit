@@ -49,21 +49,22 @@ local webview = require "webview"
 -- Add luakit;//log/ chrome page
 local log_chrome = require "log_chrome"
 
-window.add_signal("build", function (w)
-    local widgets, l, r = require "lousy.widget", w.sbar.l, w.sbar.r
-
-    -- Left-aligned status bar widgets
-    l.layout:pack(widgets.uri())
-    l.layout:pack(widgets.hist())
-    l.layout:pack(widgets.progress())
-
-    -- Right-aligned status bar widgets
-    r.layout:pack(widgets.buf())
-    r.layout:pack(log_chrome.widget())
-    r.layout:pack(widgets.ssl())
-    r.layout:pack(widgets.tabi())
-    r.layout:pack(widgets.scroll())
-end)
+-- TODO: add :unpack function, to allow overwriting layout from `userconf.lua`
+--window.add_signal("build", function (w)
+--    local widgets, l, r = require "lousy.widget", w.sbar.l, w.sbar.r
+--
+--    -- Left-aligned status bar widgets
+--    l.layout:pack(widgets.uri())
+--    l.layout:pack(widgets.hist())
+--    l.layout:pack(widgets.progress())
+--
+--    -- Right-aligned status bar widgets
+--    r.layout:pack(widgets.buf())
+--    r.layout:pack(log_chrome.widget())
+--    r.layout:pack(widgets.ssl())
+--    r.layout:pack(widgets.tabi())
+--    r.layout:pack(widgets.scroll())
+--end)
 
 -- Load luakit binds and modes
 local modes = require "modes"

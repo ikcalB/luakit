@@ -112,7 +112,7 @@ _M.load = function (delete, file)
 end
 
 -- Spawn windows from saved session and return the last window
-local restore_file = function (file, delete)
+_M.restore_file = function (file, delete)
     local ok, wins = pcall(_M.load, delete, file)
     if not ok or #wins == 0 then return end
 
@@ -158,8 +158,8 @@ end
 -- @treturn[1] table The window table for the last window created.
 -- @treturn[2] nil If no session could be loaded, `nil` is returned.
 _M.restore = function(delete)
-    return restore_file(_M.session_file, delete)
-        or restore_file(_M.recovery_file, delete)
+    return _M.restore_file(_M.session_file, delete)
+        or _M.restore_file(_M.recovery_file, delete)
 end
 
 local session_dirty = true

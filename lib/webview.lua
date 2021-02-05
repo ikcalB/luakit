@@ -366,12 +366,13 @@ function _M.set_location(view, arg)
     if type(arg) == "string" then arg = { uri = arg } end
     assert(arg.uri or arg.session_state)
 
-    local ws = webview_state[view]
-    if next(ws.blockers) then
-        ws.queued_location = arg
-        if arg.uri then view:emit_signal("property::uri") end
-        return
-    end
+    -- FIXME: adblock blocks, forcing manual reload on opening new tab (manamana | 19/10/17)
+--    local ws = webview_state[view]
+--    if next(ws.blockers) then
+--        ws.queued_location = arg
+--        if arg.uri then view:emit_signal("property::uri") end
+--        return
+--    end
 
     if arg.session_state then
         view.session_state = arg.session_state
