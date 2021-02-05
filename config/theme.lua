@@ -92,6 +92,10 @@ theme.ok = { fg = "#000", bg = "#FFF" }
 theme.warn = { fg = "#F00", bg = "#FFF" }
 theme.error = { fg = "#FFF", bg = "#F00" }
 
+-- Gopher page style (override defaults)
+theme.gopher_light = { bg = "#E8E8E8", fg = "#17181C", link = "#03678D" }
+theme.gopher_dark  = { bg = "#17181C", fg = "#E8E8E8", link = "#f90" }
+
 return theme
 
 -- vim: et:sw=4:ts=8:sts=4:tw=80

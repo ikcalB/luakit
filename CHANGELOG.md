@@ -4,7 +4,12 @@
 
 ### Added
 
+- Added Gopher protocol support, see comment in rc.lua.
+- Added two commands to clear website data (:clear-data, :clear-favicon-db)
+- Added dark mode support as setting `application.prefer_dark_mode`.
+
 ### Changed
+
 - Removed debug symbol generation for default make.
 - Changed the C standard from gnu99 to c11 because Webkit wants it.
 
@@ -13,6 +18,11 @@
 - Fixed bounding box not spanning over whole element.
 - Fixed an issue where styled hint labels caused intransparent bounding boxes.
 - Fixed a race condition when a tab is closed on NetBSD.
+- Do not execute "git ls-files" when luakit is not a git repository
+
+### Update information
+
+- The gopher module needs `luasocket` installed.
 
 ## [2.2]
 
